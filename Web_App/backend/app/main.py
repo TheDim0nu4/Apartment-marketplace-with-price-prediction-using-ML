@@ -1,8 +1,13 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.database import Base, engine
 from app.routers import auth, apartments
+
+os.makedirs("uploads", exist_ok=True)
 
 Base.metadata.create_all(bind=engine)
 
@@ -22,3 +27,5 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(apartments.router)
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")

@@ -4,12 +4,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.database import Base, engine
+from app.database import init_db
 from app.routers import auth, apartments
 
 os.makedirs("uploads", exist_ok=True)
 
-Base.metadata.create_all(bind=engine)
+init_db()
 
 app = FastAPI(
     title="Apartment Marketplace API",

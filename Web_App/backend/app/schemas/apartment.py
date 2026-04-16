@@ -26,8 +26,6 @@ class ApartmentOut(BaseModel):
     garage: bool
     balcony: bool
     new_building: bool
-    image_url: Optional[str]
+    image: Optional[str]
     owner_id: int
     created_at: datetime
-
-    model_config = {"from_attributes": True}

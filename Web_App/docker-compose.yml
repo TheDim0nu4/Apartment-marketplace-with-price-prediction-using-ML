@@ -33,6 +33,15 @@ services:
       db:
         condition: service_healthy
 
+  frontend:
+    build:
+      context: ./Web_App/frontend
+      dockerfile: Dockerfile
+    container_name: frontend_app
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   uploads_data:

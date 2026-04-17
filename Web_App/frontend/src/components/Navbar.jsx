@@ -57,9 +57,6 @@ export default function Navbar({ onHome, onSell }) {
         Estate<span style={styles.brandAccent}></span>
       </div>
       <div style={styles.actions}>
-        {currentUser && (
-          <span style={styles.userGreeting}>Hello, {currentUser}</span>
-        )}
         <button
           style={styles.btnSell}
           onMouseEnter={e => e.target.style.background = '#B8963A'}

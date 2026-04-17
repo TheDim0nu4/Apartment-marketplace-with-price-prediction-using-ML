@@ -89,7 +89,7 @@ export default function DetailPage({ apartment, onBack }) {
       </button>
 
       <div style={s.imgBox}>
-        {image ? <img src={image} alt={city} style={s.img} /> : emoji}
+        {image ? <img src={`http://localhost:8000${image}`} alt={city} style={s.img} /> : emoji}
       </div>
 
       <div style={s.price}>${apartment.price.toLocaleString()}</div>

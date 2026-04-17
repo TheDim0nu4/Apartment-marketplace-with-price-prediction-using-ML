@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, registerRequest } from "../api/auth";
-import { fetchApartments, createApartment } from "../api/apartments";
+import { fetchApartments, createApartment, deleteApartment } from "../api/apartments";
 
 const AppContext = createContext(null);
 
@@ -89,6 +89,20 @@ export function AppProvider({ children }) {
 
   };
 
+  const deleteListing = async (id) => {
+    try {
+
+      await deleteApartment(id);
+
+      setListings(prev => prev.filter(l => l.id !== id));
+
+    } catch (err) {
+
+      console.error("Failed to delete apartment:", err);
+
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -97,7 +111,8 @@ export function AppProvider({ children }) {
         login,
         register,
         logout,
-        addListing
+        addListing,
+        deleteListing
       }}
     >
       {children}

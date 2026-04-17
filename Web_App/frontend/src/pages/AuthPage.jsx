@@ -200,15 +200,6 @@ export default function AuthPage() {
         <p style={s.tagline}>
           Browse apartments for sale or list your own — fast and simple.
         </p>
-
-        <div style={s.statsRow}>
-          {[['2,400+', 'Listings'], ['47', 'Cities'], ['98%', 'Satisfied']].map(([num, label]) => (
-            <div key={label}>
-              <div style={s.statNum}>{num}</div>
-              <div style={s.statLabel}>{label}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div style={s.right}>

@@ -37,3 +37,20 @@ export async function createApartment(data) {
 
   return res.json();
 }
+
+export const deleteApartment = async (id) => {
+
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:8000/apartments/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error("Delete failed");
+  }
+
+};

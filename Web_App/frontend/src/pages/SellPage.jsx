@@ -135,6 +135,7 @@ export default function SellPage({ onBack }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
+
   const set = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
   const handleFile = (e) => {
@@ -156,8 +157,14 @@ export default function SellPage({ onBack }) {
   const handleSubmit = async () => {
     setError('');
 
-    if (!form.city || !form.rooms || !form.area || !form.price) {
-      setError('Please fill in all required fields: city, rooms, area, and price.');
+    if (!form.city || !form.rooms || !form.area || !form.price || !form.image) {
+      setError('Please fill in all required fields and upload a photo.');
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
       return;
     }
 
@@ -178,7 +185,12 @@ export default function SellPage({ onBack }) {
     setSuccess(true);
     setForm(initialForm);
 
-    setTimeout(onBack, 1800);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+    setTimeout(onBack, 1300);
   };
 
   return (
@@ -187,7 +199,9 @@ export default function SellPage({ onBack }) {
       <h1 style={s.title}>List Apartment for Sale</h1>
 
       {success && (
-        <div style={s.success}>✓ Listing published successfully! Redirecting...</div>
+        <div style={s.success}>
+          ✓ Listing published successfully! Redirecting...
+        </div>
       )}
 
       {error && (
@@ -250,7 +264,7 @@ export default function SellPage({ onBack }) {
           <label style={s.label}>City</label>
           <input
             type="text"
-            placeholder="Kyiv"
+            placeholder="Bratislava"
             value={form.city}
             onChange={e => set('city')(e.target.value)}
           />
@@ -260,9 +274,8 @@ export default function SellPage({ onBack }) {
           <label style={s.label}>Number of Rooms</label>
           <input
             type="number"
-            placeholder="2"
+            placeholder="1"
             min="1"
-            max="20"
             value={form.rooms}
             onChange={e => set('rooms')(e.target.value)}
           />
@@ -273,7 +286,7 @@ export default function SellPage({ onBack }) {
         <label style={s.label}>Area (m²)</label>
         <input
           type="number"
-          placeholder="65"
+          placeholder="10"
           min="10"
           value={form.area}
           onChange={e => set('area')(e.target.value)}
@@ -310,7 +323,7 @@ export default function SellPage({ onBack }) {
 
       <div style={s.priceRow}>
         <div style={s.priceInput}>
-          <label style={s.label}>Price (USD)</label>
+          <label style={s.label}>Price (EUR)</label>
           <input
             type="number"
             placeholder="85000"

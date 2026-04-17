@@ -24,7 +24,7 @@ const s = {
 };
 
 export default function ListingsPage({ onSelect }) {
-  const { listings } = useApp();
+  const { listings, currentUser } = useApp();
 
   return (
     <div style={s.page}>
@@ -34,7 +34,12 @@ export default function ListingsPage({ onSelect }) {
       </div>
       <div style={s.grid}>
         {listings.map((apt) => (
-          <ApartmentCard key={apt.id} apartment={apt} onClick={() => onSelect(apt)} />
+          <ApartmentCard
+            key={apt.id}
+            apartment={apt}
+            currentUser={currentUser}
+            onClick={() => onSelect(apt)}
+          />
         ))}
       </div>
     </div>

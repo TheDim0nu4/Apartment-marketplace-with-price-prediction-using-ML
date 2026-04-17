@@ -1,4 +1,5 @@
 import React from 'react';
+import { useApp } from '../context/AppContext';
 
 const s = {
   page: { padding: '2rem', maxWidth: '860px', margin: '0 auto' },
@@ -30,7 +31,6 @@ const s = {
   },
   img: { width: '100%', height: '100%', objectFit: 'cover', borderRadius: '14px' },
   price: {
-    fontFamily: "'Playfair Display', serif",
     fontSize: '2.2rem',
     fontWeight: 600,
     marginBottom: '0.5rem',
@@ -61,12 +61,28 @@ const s = {
   },
   yes: { color: '#3B7A57', fontWeight: 500 },
   no: { color: '#6B6860' },
+  contact: {
+    marginTop: '1.2rem',
+    fontSize: '0.95rem',
+    color: '#6B6860',
+  },
+  deleteBtn: {
+    marginTop: '1rem',
+    padding: '0.7rem 1.2rem',
+    background: '#FFEEEE',
+    border: '1px solid #FFBDBD',
+    color: '#C0392B',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontWeight: 600,
+    fontSize: '0.9rem'
+  }
 };
 
 const rows = [
   { label: 'Rooms', key: 'rooms', render: (v) => v },
   { label: 'Area', key: 'area', render: (v) => `${v} m²` },
-  { label: 'Price', key: 'price', render: (v) => `$${v.toLocaleString()}` },
+  { label: 'Price', key: 'price', render: (v) => `€ ${v.toLocaleString()}` },
   { label: 'Renovated', key: 'renovated', bool: true },
   { label: 'Garage', key: 'garage', bool: true },
   { label: 'Balcony', key: 'balcony', bool: true },
@@ -74,8 +90,11 @@ const rows = [
 ];
 
 export default function DetailPage({ apartment, onBack }) {
-  const { city, emoji, image } = apartment;
+  const { currentUser, deleteListing } = useApp();
+  const { city, image, email } = apartment;
+  const isMine = currentUser?.email === email;
   const isLast = (i) => i >= rows.length * 2 - 2;
+  
 
   return (
     <div style={s.page}>
@@ -92,7 +111,7 @@ export default function DetailPage({ apartment, onBack }) {
         {image ? <img src={`http://localhost:8000${image}`} alt={city} style={s.img} /> : emoji}
       </div>
 
-      <div style={s.price}>${apartment.price.toLocaleString()}</div>
+      <div style={s.price}>€ {apartment.price.toLocaleString()}</div>
       <div style={s.location}>{city}</div>
 
       <div style={s.table}>
@@ -115,6 +134,30 @@ export default function DetailPage({ apartment, onBack }) {
           );
         })}
       </div>
+
+      <div style={s.contact}>
+        Contact owner:{" "}
+        {isMine ? (
+          <span style={{ fontWeight: 600 }}>You</span>
+        ) : (
+          <a href={`mailto:${email}`} style={{ color: '#1C1C1A', fontWeight: 500 }}>
+            {email}
+          </a>
+        )}
+      </div>
+
+      {isMine && (
+        <button
+          style={s.deleteBtn}
+          onClick={() => {
+            deleteListing(apartment.id);
+            onBack();
+          }}
+        >
+          🗑 Delete listing
+        </button>
+      )}
+
     </div>
   );
 }

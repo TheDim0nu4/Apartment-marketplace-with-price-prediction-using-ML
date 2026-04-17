@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { loginRequest, registerRequest } from "../api/auth";
+import { loginRequest, registerRequest, getMeRequest } from "../api/auth";
 import { fetchApartments, createApartment, deleteApartment } from "../api/apartments";
 
 const AppContext = createContext(null);
@@ -29,6 +29,21 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     loadListings();
+
+    const loadUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const userData = await getMeRequest(token);
+          setCurrentUser(userData);
+        } catch (err) {
+          console.error("Failed to load user:", err);
+          localStorage.removeItem("token");
+        }
+      }
+    };
+    
+    loadUser();
   }, []);
 
   // =========================

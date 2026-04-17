@@ -32,3 +32,18 @@ export async function loginRequest(email, password) {
 
   return res.json();
 }
+
+export async function getMeRequest(token) {
+  const res = await fetch(`${API}/auth/me`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch user");
+  }
+
+  return res.json();
+}

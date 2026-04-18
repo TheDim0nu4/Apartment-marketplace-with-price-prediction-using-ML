@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import RadioGroup from '../components/RadioGroup';
+import { predictApartmentPrice } from "../api/ml_model";
 
 const s = {
   page: { padding: '2rem', maxWidth: '600px', margin: '0 auto' },
@@ -221,22 +222,7 @@ export default function SellPage({ onBack }) {
 
     try {
 
-      const res = await fetch(
-        "https://apartment-price-prediction-api-131689818682.europe-central2.run.app/get-apartment-price-prediction",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(body)
-        }
-      );
-
-      if (!res.ok) {
-        throw new Error("Prediction API error");
-      }
-
-      const data = await res.json();
+      const data = await predictApartmentPrice(body);
 
       setForm(f => ({
         ...f,

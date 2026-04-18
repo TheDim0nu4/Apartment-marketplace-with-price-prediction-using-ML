@@ -1,4 +1,4 @@
-const API = "http://localhost:8000";
+import { API } from './config';
 
 export async function fetchApartments() {
 
@@ -42,7 +42,7 @@ export const deleteApartment = async (id) => {
 
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:8000/apartments/${id}`, {
+  const res = await fetch(`${API}/apartments/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`

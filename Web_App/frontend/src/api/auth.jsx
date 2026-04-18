@@ -1,4 +1,4 @@
-const API = "http://localhost:8000";
+import { API } from './config';
 
 export async function registerRequest(email, password) {
 

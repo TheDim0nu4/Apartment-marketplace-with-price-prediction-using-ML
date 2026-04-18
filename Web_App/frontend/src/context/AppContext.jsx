@@ -94,7 +94,7 @@ export function AppProvider({ children }) {
 
       const newListing = await createApartment(listing);
 
-      setListings((prev) => [newListing, ...prev]);
+      await loadListings();
 
     } catch (err) {
 

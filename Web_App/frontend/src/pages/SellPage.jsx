@@ -193,6 +193,70 @@ export default function SellPage({ onBack }) {
     setTimeout(onBack, 1300);
   };
 
+
+  const predictPrice = async () => {
+
+    setError('');
+
+    if (!form.city || !form.rooms || !form.area) {
+      setError("Fill city, rooms and area before AI prediction.");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      return;
+    }
+
+    const body = {
+      rooms: Number(form.rooms),
+      size: Number(form.area),
+      reconstructed: form.renovated ? "Yes" : "No",
+      garage: form.garage ? "Yes" : "No",
+      balcony: form.balcony ? "Yes" : "No",
+      new: form.newBuilding ? "Yes" : "No",
+      location: form.city
+    };
+
+    try {
+
+      const res = await fetch(
+        "https://apartment-price-prediction-api-131689818682.europe-central2.run.app/get-apartment-price-prediction",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Prediction API error");
+      }
+
+      const data = await res.json();
+
+      setForm(f => ({
+        ...f,
+        price: Math.round(data["predicted price"])
+      }));
+
+
+    } catch (err) {
+
+      setError("AI prediction failed. Please try again.");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+  };
+
   return (
     <div style={s.page}>
       <button style={s.backBtn} onClick={onBack}>← Back</button>
@@ -337,7 +401,7 @@ export default function SellPage({ onBack }) {
           style={s.btnAI}
           onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
           onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          onClick={() => alert('AI price prediction — coming soon!')}
+          onClick={predictPrice}
         >
           ✦ Predict with AI
         </button>

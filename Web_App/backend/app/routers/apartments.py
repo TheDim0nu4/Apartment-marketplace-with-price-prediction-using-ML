@@ -76,7 +76,6 @@ def create_apartment(
 
     cursor = conn.cursor()
 
-    # INSERT
     cursor.execute(
         """
         INSERT INTO apartments (
@@ -102,7 +101,6 @@ def create_apartment(
 
     apartment_id = cursor.fetchone()["id"]
 
-    # SELECT with email
     cursor.execute(
         """
         SELECT apartments.*, users.email

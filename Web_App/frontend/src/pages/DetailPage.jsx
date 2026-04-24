@@ -64,13 +64,13 @@ const s = {
 };
 
 const rows = [
-  { label: 'Rooms', key: 'rooms', render: (v) => v },
-  { label: 'Area', key: 'area', render: (v) => `${v} m²` },
-  { label: 'Price', key: 'price', render: (v) => `$${v.toLocaleString()}` },
-  { label: 'Renovated', key: 'renovated', bool: true },
-  { label: 'Garage', key: 'garage', bool: true },
-  { label: 'Balcony', key: 'balcony', bool: true },
-  { label: 'New Building', key: 'newBuilding', bool: true },
+  { label: 'Izby', key: 'rooms', render: (v) => v },
+  { label: 'Rozloha', key: 'area', render: (v) => `${v} m²` },
+  { label: 'Cena', key: 'price', render: (v) => `${v.toLocaleString('sk-SK')} €` },
+  { label: 'Po rekonštrukcii', key: 'renovated', bool: true },
+  { label: 'Garáž', key: 'garage', bool: true },
+  { label: 'Balkón', key: 'balcony', bool: true },
+  { label: 'Novostavba', key: 'newBuilding', bool: true },
 ];
 
 export default function DetailPage({ apartment, onBack }) {
@@ -85,14 +85,14 @@ export default function DetailPage({ apartment, onBack }) {
         onMouseLeave={e => e.currentTarget.style.color = '#6B6860'}
         onClick={onBack}
       >
-        ← Back to listings
+        ← Späť na inzeráty
       </button>
 
       <div style={s.imgBox}>
         {image ? <img src={image} alt={city} style={s.img} /> : emoji}
       </div>
 
-      <div style={s.price}>${apartment.price.toLocaleString()}</div>
+      <div style={s.price}>{apartment.price.toLocaleString('sk-SK')} €</div>
       <div style={s.location}>{city}</div>
 
       <div style={s.table}>
@@ -109,7 +109,7 @@ export default function DetailPage({ apartment, onBack }) {
                 ...(noBorderBottom ? { borderBottom: 'none' } : {}),
                 ...(row.bool ? (val ? s.yes : s.no) : {}),
               }}>
-                {row.bool ? (val ? 'Yes' : 'No') : row.render(val)}
+                {row.bool ? (val ? 'Áno' : 'Nie') : row.render(val)}
               </div>
             </React.Fragment>
           );

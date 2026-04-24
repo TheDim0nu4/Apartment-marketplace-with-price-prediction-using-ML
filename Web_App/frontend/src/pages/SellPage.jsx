@@ -173,7 +173,6 @@ export default function SellPage({ onBack }) {
         </div>
       )}
 
-      {/* Photo upload */}
       <div style={s.formGroup}>
         <label style={s.label}>Apartment Photo</label>
         <div
@@ -196,13 +195,12 @@ export default function SellPage({ onBack }) {
         {form.image && <div style={s.fileName}>📎 {form.image}</div>}
       </div>
 
-      {/* Divider */}
       <div style={s.divider}><div style={s.dividerLine} />Details<div style={s.dividerLine} /></div>
 
       <div style={s.row2}>
         <div style={s.formGroup}>
           <label style={s.label}>City</label>
-          <input type="text" placeholder="Kyiv" value={form.city} onChange={e => set('city')(e.target.value)} />
+          <input type="text" placeholder="Bratislava" value={form.city} onChange={e => set('city')(e.target.value)} />
         </div>
         <div style={s.formGroup}>
           <label style={s.label}>Number of Rooms</label>
@@ -215,7 +213,6 @@ export default function SellPage({ onBack }) {
         <input type="number" placeholder="65" min="10" value={form.area} onChange={e => set('area')(e.target.value)} />
       </div>
 
-      {/* Divider */}
       <div style={s.divider}><div style={s.dividerLine} />Features<div style={s.dividerLine} /></div>
 
       <div style={s.formGroup}>
@@ -239,13 +236,12 @@ export default function SellPage({ onBack }) {
         <RadioGroup name="newBuilding" value={form.newBuilding} onChange={set('newBuilding')} />
       </div>
 
-      {/* Divider */}
       <div style={s.divider}><div style={s.dividerLine} />Price<div style={s.dividerLine} /></div>
 
       <div style={s.priceRow}>
         <div style={s.priceInput}>
-          <label style={s.label}>Price (USD)</label>
-          <input type="number" placeholder="85000" min="0" value={form.price} onChange={e => set('price')(e.target.value)} />
+          <label style={s.label}>Price (€)</label>
+          <input type="number" placeholder="150000" min="0" value={form.price} onChange={e => set('price')(e.target.value)} />
         </div>
         <button
           style={s.btnAI}

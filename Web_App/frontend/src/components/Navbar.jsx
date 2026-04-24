@@ -16,11 +16,29 @@ const styles = {
     fontFamily: "'Playfair Display', serif",
     fontSize: '1.4rem',
     color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.6rem',
     flex: 1,
     cursor: 'pointer',
     userSelect: 'none',
   },
   brandAccent: { color: '#C4A96B' },
+  flagBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.35rem',
+    background: 'rgba(196,169,107,0.12)',
+    border: '1px solid rgba(196,169,107,0.25)',
+    borderRadius: '20px',
+    padding: '2px 10px 2px 4px',
+    fontSize: '0.72rem',
+    color: 'rgba(255,255,255,0.55)',
+    letterSpacing: '0.04em',
+    fontFamily: "'DM Sans', sans-serif",
+    fontWeight: 400,
+    marginLeft: '0.5rem',
+  },
   actions: { display: 'flex', gap: '0.75rem', alignItems: 'center' },
   userGreeting: {
     fontSize: '0.85rem',
@@ -54,7 +72,12 @@ export default function Navbar({ onHome, onSell }) {
   return (
     <nav style={styles.nav}>
       <div style={styles.brand} onClick={onHome}>
-        Estate<span style={styles.brandAccent}></span>
+        <span>
+          Nehnuteľnosti<span style={styles.brandAccent}>.sk</span>
+        </span>
+        <span style={styles.flagBadge}>
+          🇸🇰 Slovakia
+        </span>
       </div>
       <div style={styles.actions}>
         {currentUser && (

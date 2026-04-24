@@ -32,6 +32,22 @@ const s = {
     bottom: '-50px', right: '-50px',
     pointerEvents: 'none',
   },
+  countryBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    background: 'rgba(196,169,107,0.1)',
+    border: '1px solid rgba(196,169,107,0.2)',
+    borderRadius: '20px',
+    padding: '4px 14px',
+    fontSize: '0.8rem',
+    color: 'rgba(255,255,255,0.6)',
+    letterSpacing: '0.05em',
+    marginBottom: '1.25rem',
+    width: 'fit-content',
+    position: 'relative',
+    zIndex: 1,
+  },
   brand: {
     fontFamily: "'Playfair Display', serif",
     fontSize: '2.8rem',
@@ -130,11 +146,9 @@ export default function AuthPage() {
   const [tab, setTab] = useState('login');
   const [error, setError] = useState('');
 
-  // Login state
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPass, setLoginPass] = useState('');
 
-  // Register state
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPass, setRegPass] = useState('');
@@ -157,14 +171,14 @@ export default function AuthPage() {
 
   return (
     <div style={s.page}>
-      {/* Left panel */}
       <div style={s.left}>
         <div style={s.circle1} />
         <div style={s.circle2} />
+        <div style={s.countryBadge}>🇸🇰 Real Estate in Slovakia</div>
         <div style={s.brand}>
           Find Your<br /><span style={{ color: '#C4A96B' }}>Dream Home</span>
         </div>
-        <p style={s.tagline}>Browse apartments for sale or list your own — fast and simple.</p>
+        <p style={s.tagline}>Browse apartments for sale in Slovakia or list your own — fast and simple.</p>
         <div style={s.statsRow}>
           {[['2,400+', 'Listings'], ['47', 'Cities'], ['98%', 'Satisfied']].map(([num, label]) => (
             <div key={label}>
@@ -175,7 +189,6 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* Right panel */}
       <div style={s.right}>
         <div style={s.formBox}>
           <div style={s.tabs}>

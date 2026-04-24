@@ -14,6 +14,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - be_db
 
   backend:
     build:
@@ -28,6 +30,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - fe_be
+      - be_db
 
   frontend:
     build:
@@ -37,7 +42,13 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    networks:
+      - fe_be
 
 volumes:
   postgres_data:
   uploads_data:
+
+networks:
+  fe_be:
+  be_db:

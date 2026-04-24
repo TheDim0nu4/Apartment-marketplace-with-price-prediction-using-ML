@@ -13,7 +13,9 @@ function MainApp() {
   const [view, setView] = useState('listings');
   const [selectedApt, setSelectedApt] = useState(null);
 
-  if (!currentUser) return <AuthPage />;
+  if (!currentUser) {
+    return <AuthPage />;
+  }
 
   return (
     <>

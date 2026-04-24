@@ -1,5 +1,5 @@
 __pycache__/
 *.py[cod]
-#node_modules/
 node_modules/
 Web_App/frontend/node_modules/
+.env.prod

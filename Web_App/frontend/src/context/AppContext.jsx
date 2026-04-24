@@ -1,30 +1,135 @@
-import React, { createContext, useContext, useState } from 'react';
-import { MOCK_LISTINGS } from '../data/mockData';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { loginRequest, registerRequest, getMeRequest } from "../api/auth";
+import { fetchApartments, createApartment, deleteApartment } from "../api/apartments";
 
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [listings, setListings] = useState(MOCK_LISTINGS);
 
-  const login = (email) => {
-    setCurrentUser(email.split('@')[0]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [listings, setListings] = useState([]);
+
+  // =========================
+  // LOAD APARTMENTS FROM API
+  // =========================
+
+  const loadListings = async () => {
+    try {
+
+      const data = await fetchApartments();
+
+      setListings(data);
+
+    } catch (err) {
+
+      console.error("Failed to load apartments:", err);
+
+    }
   };
 
-  const register = (name) => {
-    setCurrentUser(name);
+  useEffect(() => {
+    loadListings();
+
+    const loadUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const userData = await getMeRequest(token);
+          setCurrentUser(userData);
+        } catch (err) {
+          console.error("Failed to load user:", err);
+          localStorage.removeItem("token");
+        }
+      }
+    };
+    
+    loadUser();
+  }, []);
+
+  // =========================
+  // AUTH
+  // =========================
+
+  const login = async (email, password) => {
+
+    const data = await loginRequest(email, password);
+
+    if (!data || !data.access_token) {
+      throw new Error("Login failed");
+    }
+
+    localStorage.setItem("token", data.access_token);
+
+    setCurrentUser(data.user);
+  };
+
+  const register = async (email, password) => {
+
+    const data = await registerRequest(email, password);
+
+    if (!data || !data.access_token) {
+      throw new Error("Register failed");
+    }
+
+    localStorage.setItem("token", data.access_token);
+
+    setCurrentUser(data.user);
   };
 
   const logout = () => {
+
+    localStorage.removeItem("token");
+
     setCurrentUser(null);
+
   };
 
-  const addListing = (listing) => {
-    setListings((prev) => [listing, ...prev]);
+  // =========================
+  // ADD NEW LISTING
+  // =========================
+
+  const addListing = async (listing) => {
+
+    try {
+
+      const newListing = await createApartment(listing);
+
+      await loadListings();
+
+    } catch (err) {
+
+      console.error("Failed to create apartment:", err);
+
+    }
+
+  };
+
+  const deleteListing = async (id) => {
+    try {
+
+      await deleteApartment(id);
+
+      setListings(prev => prev.filter(l => l.id !== id));
+
+    } catch (err) {
+
+      console.error("Failed to delete apartment:", err);
+
+    }
   };
 
   return (
-    <AppContext.Provider value={{ currentUser, listings, login, register, logout, addListing }}>
+    <AppContext.Provider
+      value={{
+        currentUser,
+        listings,
+        login,
+        register,
+        logout,
+        addListing,
+        deleteListing
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

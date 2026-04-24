@@ -29,3 +29,4 @@ class ApartmentOut(BaseModel):
     image: Optional[str]
     owner_id: int
     created_at: datetime
+    email: Optional[str] = None

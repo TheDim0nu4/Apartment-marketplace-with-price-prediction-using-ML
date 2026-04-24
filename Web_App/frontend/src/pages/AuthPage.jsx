@@ -154,19 +154,27 @@ export default function AuthPage() {
   const [regPass, setRegPass] = useState('');
   const [regPass2, setRegPass2] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError('');
     if (!loginEmail) { setError('Please enter your email.'); return; }
     if (!loginPass) { setError('Please enter your password.'); return; }
-    login(loginEmail);
+    try {
+      await login(loginEmail, loginPass);
+    } catch (err) {
+      setError('Invalid email or password.');
+    }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setError('');
-    if (!regName || !regEmail) { setError('Please fill in all fields.'); return; }
+    if (!regEmail) { setError('Please fill in all fields.'); return; }
     if (regPass.length < 8) { setError('Password must be at least 8 characters.'); return; }
     if (regPass !== regPass2) { setError('Passwords do not match.'); return; }
-    register(regName);
+    try {
+      await register(regEmail, regPass);
+    } catch (err) {
+      setError('Registration failed. This email probably already exists.');
+    }
   };
 
   return (
@@ -213,10 +221,6 @@ export default function AuthPage() {
             </>
           ) : (
             <>
-              <div style={s.formGroup}>
-                <label style={s.label}>Full Name</label>
-                <input type="text" placeholder="John Smith" value={regName} onChange={e => setRegName(e.target.value)} />
-              </div>
               <div style={s.formGroup}>
                 <label style={s.label}>Email</label>
                 <input type="email" placeholder="your@email.com" value={regEmail} onChange={e => setRegEmail(e.target.value)} />

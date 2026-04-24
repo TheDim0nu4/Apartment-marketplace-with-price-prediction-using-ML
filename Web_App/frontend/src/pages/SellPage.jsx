@@ -130,7 +130,7 @@ export default function SellPage({ onBack }) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => setForm((f) => ({ ...f, image: file.name, imagePreview: ev.target.result }));
+    reader.onload = (ev) => setForm((f) => ({ ...f, image: file, imagePreview: ev.target.result }));
     reader.readAsDataURL(file);
   };
 
@@ -149,8 +149,8 @@ export default function SellPage({ onBack }) {
       renovated: form.renovated,
       garage: form.garage,
       balcony: form.balcony,
-      newBuilding: form.newBuilding,
-      image: form.imagePreview,
+      new_building: form.newBuilding,
+      image: form.image,
       emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
     };
     addListing(newApt);
@@ -192,7 +192,7 @@ export default function SellPage({ onBack }) {
           )}
         </div>
         <input type="file" id="file-input" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
-        {form.image && <div style={s.fileName}>📎 {form.image}</div>}
+        {form.image && <div style={s.fileName}>📎 {form.image.name}</div>}
       </div>
 
       <div style={s.divider}><div style={s.dividerLine} />Details<div style={s.dividerLine} /></div>

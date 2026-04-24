@@ -61,38 +61,78 @@ const s = {
   },
   yes: { color: '#3B7A57', fontWeight: 500 },
   no: { color: '#6B6860' },
+  headerRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '1.5rem',
+  },
+  btnDelete: {
+    padding: '0.5rem 1rem',
+    borderRadius: '8px',
+    background: '#FCEBEB',
+    color: '#D32F2F',
+    border: '1px solid #F09595',
+    cursor: 'pointer',
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: '0.85rem',
+    fontWeight: 500,
+    transition: 'background 0.2s',
+  },
 };
 
 const rows = [
-  { label: 'Izby', key: 'rooms', render: (v) => v },
-  { label: 'Rozloha', key: 'area', render: (v) => `${v} m²` },
-  { label: 'Cena', key: 'price', render: (v) => `${v.toLocaleString('sk-SK')} €` },
-  { label: 'Po rekonštrukcii', key: 'renovated', bool: true },
-  { label: 'Garáž', key: 'garage', bool: true },
-  { label: 'Balkón', key: 'balcony', bool: true },
-  { label: 'Novostavba', key: 'newBuilding', bool: true },
+  { label: 'Rooms', key: 'rooms', render: (v) => v },
+  { label: 'Area', key: 'area', render: (v) => `${v} m²` },
+  { label: 'Price', key: 'price', render: (v) => `€ ${v.toLocaleString()}` },
+  { label: 'Renovated', key: 'renovated', bool: true },
+  { label: 'Garage', key: 'garage', bool: true },
+  { label: 'Balcony', key: 'balcony', bool: true },
+  { label: 'New Building', key: 'new_building', bool: true },
 ];
 
 export default function DetailPage({ apartment, onBack }) {
-  const { city, emoji, image } = apartment;
+  const { currentUser, deleteListing } = require('../context/AppContext').useApp();
+  const { city, emoji, image, email, id } = apartment;
   const isLast = (i) => i >= rows.length * 2 - 2;
+  const isMine = currentUser?.email === email;
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this listing?")) {
+      await deleteListing(id);
+      onBack();
+    }
+  };
 
   return (
     <div style={s.page}>
-      <button
-        style={s.backBtn}
-        onMouseEnter={e => e.currentTarget.style.color = '#1C1C1A'}
-        onMouseLeave={e => e.currentTarget.style.color = '#6B6860'}
-        onClick={onBack}
-      >
-        ← Späť na inzeráty
-      </button>
+      <div style={s.headerRow}>
+        <button
+          style={s.backBtn}
+          onMouseEnter={e => e.currentTarget.style.color = '#1C1C1A'}
+          onMouseLeave={e => e.currentTarget.style.color = '#6B6860'}
+          onClick={onBack}
+        >
+          ← Back to listings
+        </button>
+
+        {isMine && (
+          <button 
+            style={s.btnDelete}
+            onMouseEnter={e => e.currentTarget.style.background = '#F09595'}
+            onMouseLeave={e => e.currentTarget.style.background = '#FCEBEB'}
+            onClick={handleDelete}
+          >
+            Delete listing
+          </button>
+        )}
+      </div>
 
       <div style={s.imgBox}>
         {image ? <img src={image} alt={city} style={s.img} /> : emoji}
       </div>
 
-      <div style={s.price}>{apartment.price.toLocaleString('sk-SK')} €</div>
+      <div style={s.price}>€ {apartment.price.toLocaleString()}</div>
       <div style={s.location}>{city}</div>
 
       <div style={s.table}>
@@ -109,7 +149,7 @@ export default function DetailPage({ apartment, onBack }) {
                 ...(noBorderBottom ? { borderBottom: 'none' } : {}),
                 ...(row.bool ? (val ? s.yes : s.no) : {}),
               }}>
-                {row.bool ? (val ? 'Áno' : 'Nie') : row.render(val)}
+                {row.bool ? (val ? 'Yes' : 'No') : row.render(val)}
               </div>
             </React.Fragment>
           );

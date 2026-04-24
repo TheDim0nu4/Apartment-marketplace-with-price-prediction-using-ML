@@ -81,7 +81,7 @@ export default function Navbar({ onHome, onSell }) {
       </div>
       <div style={styles.actions}>
         {currentUser && (
-          <span style={styles.userGreeting}>Hello, {currentUser}</span>
+          <span style={styles.userGreeting}>Hello, {currentUser.email}</span>
         )}
         <button
           style={styles.btnSell}

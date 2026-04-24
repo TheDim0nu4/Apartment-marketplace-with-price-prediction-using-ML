@@ -44,7 +44,7 @@ const styles = {
 };
 
 export default function ApartmentCard({ apartment, onClick, currentUser }) {
-  const { city, rooms, area, price, renovated, garage, balcony, new_building, image, email } = apartment;
+  const { city, rooms, area, price, renovated, garage, balcony, new_building, image, email, emoji } = apartment;
   const isMine = currentUser?.email === email;
 
 
@@ -64,7 +64,7 @@ export default function ApartmentCard({ apartment, onClick, currentUser }) {
       onMouseLeave={() => setHovered(false)}
     >
       <div style={styles.imgBox}>
-        {image ? <img src={image} alt={city} style={styles.img} /> : emoji}
+        {image ? <img src={image} alt={city} style={styles.img} /> : (emoji || '🏠')}
       </div>
       <div style={styles.body}>
         <div style={styles.price}>€ {price.toLocaleString()}</div>

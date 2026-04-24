@@ -114,7 +114,7 @@ export default function ListingsPage({ onSelect }) {
       if (filters.city && !apt.city.toLowerCase().includes(filters.city.toLowerCase())) return false;
       if (filters.minPrice && apt.price < Number(filters.minPrice)) return false;
       if (filters.maxPrice && apt.price > Number(filters.maxPrice)) return false;
-      if (filters.onlyMine && apt.owner !== currentUser) return false;
+      if (filters.onlyMine && apt.email !== currentUser?.email) return false;
       return true;
     });
   }, [listings, filters, currentUser]);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import RadioGroup from '../components/RadioGroup';
 import { EMOJIS } from '../data/mockData';
+import { predictApartmentPrice } from '../api/ml_model';
 
 const s = {
   page: { padding: '2rem', maxWidth: '600px', margin: '0 auto' },
@@ -123,6 +124,7 @@ export default function SellPage({ onBack }) {
   const [form, setForm] = useState(initialForm);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [isPredicting, setIsPredicting] = useState(false);
 
   const set = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
@@ -132,6 +134,39 @@ export default function SellPage({ onBack }) {
     const reader = new FileReader();
     reader.onload = (ev) => setForm((f) => ({ ...f, image: file, imagePreview: ev.target.result }));
     reader.readAsDataURL(file);
+  };
+
+  const handlePredictPrice = async () => {
+    setError('');
+    if (!form.city || !form.rooms || !form.area) {
+      setError('Please fill in city, rooms, and area for AI prediction.');
+      return;
+    }
+    
+    setIsPredicting(true);
+    try {
+      const payload = {
+        rooms: Number(form.rooms),
+        size: Number(form.area),
+        location: form.city,
+        reconstructed: form.renovated ? 'Yes' : 'No',
+        garage: form.garage ? 'Yes' : 'No',
+        balcony: form.balcony ? 'Yes' : 'No',
+        new: form.newBuilding ? 'Yes' : 'No'
+      };
+      
+      const data = await predictApartmentPrice(payload);
+      if (data && data['predicted price']) {
+        setForm(f => ({ ...f, price: Math.round(data['predicted price']).toString() }));
+      } else {
+        setError('Received invalid data from AI prediction.');
+      }
+    } catch (err) {
+      console.error('Prediction error:', err);
+      setError('AI prediction failed. Please try again.');
+    } finally {
+      setIsPredicting(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -244,12 +279,13 @@ export default function SellPage({ onBack }) {
           <input type="number" placeholder="150000" min="0" value={form.price} onChange={e => set('price')(e.target.value)} />
         </div>
         <button
-          style={s.btnAI}
-          onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          onClick={() => alert('AI price prediction — coming soon!')}
+          style={{ ...s.btnAI, opacity: isPredicting ? 0.7 : 1, cursor: isPredicting ? 'not-allowed' : 'pointer' }}
+          onMouseEnter={e => !isPredicting && (e.currentTarget.style.opacity = '0.85')}
+          onMouseLeave={e => !isPredicting && (e.currentTarget.style.opacity = '1')}
+          onClick={handlePredictPrice}
+          disabled={isPredicting}
         >
-          ✦ Predict with AI
+          {isPredicting ? '⏳ Predicting...' : '✦ Predict with AI'}
         </button>
       </div>
 

@@ -1,4 +1,4 @@
-# 🏠 Apartment marketplace with price prediction <br> using ML
+# 🏠 Apartment marketplace with price prediction <br>    using ML
 
 Короткий опис проєкту
 

@@ -64,7 +64,7 @@ export default function ApartmentCard({ apartment, onClick, currentUser }) {
       onMouseLeave={() => setHovered(false)}
     >
       <div style={styles.imgBox}>
-        {image ? <img src={image} alt={city} style={styles.img} /> : (emoji || '🏠')}
+        <img src={image} alt={city} style={styles.img} /> 
       </div>
       <div style={styles.body}>
         <div style={styles.price}>€ {price.toLocaleString()}</div>

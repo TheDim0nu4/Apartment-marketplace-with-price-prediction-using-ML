@@ -73,15 +73,12 @@ export default function Navbar({ onHome, onSell }) {
     <nav style={styles.nav}>
       <div style={styles.brand} onClick={onHome}>
         <span>
-          Nehnuteľnosti<span style={styles.brandAccent}>.sk</span>
-        </span>
-        <span style={styles.flagBadge}>
-          🇸🇰 Slovakia
+          Rentix<span style={styles.brandAccent}>.sk</span>
         </span>
       </div>
       <div style={styles.actions}>
         {currentUser && (
-          <span style={styles.userGreeting}>Hello, {currentUser.email}</span>
+          <span style={styles.userGreeting}>Logged in as: {currentUser.email}</span>
         )}
         <button
           style={styles.btnSell}

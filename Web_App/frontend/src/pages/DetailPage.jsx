@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const s = {
   page: { padding: '2rem', maxWidth: '860px', margin: '0 auto' },
@@ -30,7 +30,6 @@ const s = {
   },
   img: { width: '100%', height: '100%', objectFit: 'cover', borderRadius: '14px' },
   price: {
-    fontFamily: "'Playfair Display', serif",
     fontSize: '2.2rem',
     fontWeight: 600,
     marginBottom: '0.5rem',
@@ -79,6 +78,70 @@ const s = {
     fontWeight: 500,
     transition: 'background 0.2s',
   },
+  contact: {
+    marginTop: '1.5rem',
+    fontSize: '0.95rem',
+    color: '#1C1C1A',
+    padding: '0.9rem 1.25rem',
+    border: '1px solid #E2DDD4',
+    borderRadius: '12px',
+    background: '#F9F7F2'
+  },
+  contactLabel: {
+    fontSize: '0.75rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.06em',
+    color: '#6B6860',
+    marginBottom: '0.3rem'
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'rgba(0,0,0,0.35)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    background: '#fff',
+    padding: '2rem',
+    borderRadius: '14px',
+    width: '320px',
+    textAlign: 'center',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+  },
+
+  modalText: {
+    marginBottom: '1.5rem',
+    fontSize: '0.95rem',
+  },
+
+  modalBtns: {
+    display: 'flex',
+    gap: '0.7rem',
+    justifyContent: 'center',
+  },
+
+  btnCancel: {
+    padding: '0.5rem 1rem',
+    borderRadius: '8px',
+    border: '1px solid #E2DDD4',
+    background: '#F9F7F2',
+    cursor: 'pointer',
+  },
+
+  btnConfirm: {
+    padding: '0.5rem 1rem',
+    borderRadius: '8px',
+    border: '1px solid #F09595',
+    background: '#FCEBEB',
+    color: '#D32F2F',
+    cursor: 'pointer',
+  }
 };
 
 const rows = [
@@ -97,11 +160,16 @@ export default function DetailPage({ apartment, onBack }) {
   const isLast = (i) => i >= rows.length * 2 - 2;
   const isMine = currentUser?.email === email;
 
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this listing?")) {
-      await deleteListing(id);
-      onBack();
-    }
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    await deleteListing(id);
+    setShowConfirm(false);
+    onBack();
   };
 
   return (
@@ -129,7 +197,7 @@ export default function DetailPage({ apartment, onBack }) {
       </div>
 
       <div style={s.imgBox}>
-        {image ? <img src={image} alt={city} style={s.img} /> : emoji}
+        <img src={image} alt={city} style={s.img} />
       </div>
 
       <div style={s.price}>€ {apartment.price.toLocaleString()}</div>
@@ -155,6 +223,39 @@ export default function DetailPage({ apartment, onBack }) {
           );
         })}
       </div>
+      <div style={s.contact}>
+        <div style={s.contactLabel}>Contact</div>
+        <div>{email}</div>
+      </div>
+
+
+      {showConfirm && (
+        <div style={s.modalOverlay}>
+          <div style={s.modal}>
+            <div style={s.modalText}>
+              Are you sure you want to delete this listing?
+            </div>
+
+            <div style={s.modalBtns}>
+              <button
+                style={s.btnCancel}
+                onClick={() => setShowConfirm(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                style={s.btnConfirm}
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 }

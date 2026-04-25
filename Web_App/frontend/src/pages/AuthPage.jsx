@@ -182,19 +182,11 @@ export default function AuthPage() {
       <div style={s.left}>
         <div style={s.circle1} />
         <div style={s.circle2} />
-        <div style={s.countryBadge}>🇸🇰 Real Estate in Slovakia</div>
+        <div style={s.countryBadge}>Real Estate in Slovakia</div>
         <div style={s.brand}>
           Find Your<br /><span style={{ color: '#C4A96B' }}>Dream Home</span>
         </div>
         <p style={s.tagline}>Browse apartments for sale in Slovakia or list your own — fast and simple.</p>
-        <div style={s.statsRow}>
-          {[['2,400+', 'Listings'], ['47', 'Cities'], ['98%', 'Satisfied']].map(([num, label]) => (
-            <div key={label}>
-              <div style={s.statNum}>{num}</div>
-              <div style={s.statLabel}>{label}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div style={s.right}>

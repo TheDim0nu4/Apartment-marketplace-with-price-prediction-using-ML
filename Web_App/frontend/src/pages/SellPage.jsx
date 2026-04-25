@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import RadioGroup from '../components/RadioGroup';
-import { EMOJIS } from '../data/mockData';
 import { predictApartmentPrice } from '../api/ml_model';
 
 const s = {
@@ -128,6 +127,13 @@ export default function SellPage({ onBack }) {
 
   const set = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
+  const scrollToMessage = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -140,6 +146,7 @@ export default function SellPage({ onBack }) {
     setError('');
     if (!form.city || !form.rooms || !form.area) {
       setError('Please fill in city, rooms, and area for AI prediction.');
+      scrollToMessage();
       return;
     }
     
@@ -160,10 +167,12 @@ export default function SellPage({ onBack }) {
         setForm(f => ({ ...f, price: Math.round(data['predicted price']).toString() }));
       } else {
         setError('Received invalid data from AI prediction.');
+        scrollToMessage();
       }
     } catch (err) {
       console.error('Prediction error:', err);
       setError('AI prediction failed. Please try again.');
+      scrollToMessage();
     } finally {
       setIsPredicting(false);
     }
@@ -171,8 +180,9 @@ export default function SellPage({ onBack }) {
 
   const handleSubmit = () => {
     setError('');
-    if (!form.city || !form.rooms || !form.area || !form.price) {
-      setError('Please fill in all required fields: city, rooms, area, and price.');
+    if (!form.city || !form.rooms || !form.area || !form.price || !form.image) {
+      setError('Please fill in all required fields: city, rooms, area, price, and apartment photo.');
+      scrollToMessage();
       return;
     }
     const newApt = {
@@ -186,12 +196,12 @@ export default function SellPage({ onBack }) {
       balcony: form.balcony,
       new_building: form.newBuilding,
       image: form.image,
-      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
     };
     addListing(newApt);
     setSuccess(true);
     setForm(initialForm);
-    setTimeout(onBack, 1800);
+    scrollToMessage();
+    setTimeout(onBack, 1300);
   };
 
   return (

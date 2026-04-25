@@ -9,10 +9,6 @@ export function AppProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [listings, setListings] = useState([]);
 
-  // =========================
-  // LOAD APARTMENTS FROM API
-  // =========================
-
   const loadListings = async () => {
     try {
 
@@ -45,10 +41,6 @@ export function AppProvider({ children }) {
     
     loadUser();
   }, []);
-
-  // =========================
-  // AUTH
-  // =========================
 
   const login = async (email, password) => {
 
@@ -83,10 +75,6 @@ export function AppProvider({ children }) {
     setCurrentUser(null);
 
   };
-
-  // =========================
-  // ADD NEW LISTING
-  // =========================
 
   const addListing = async (listing) => {
 

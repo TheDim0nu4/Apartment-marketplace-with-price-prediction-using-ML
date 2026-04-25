@@ -25,6 +25,8 @@ services:
     restart: always
     env_file:
       - .env
+    expose:
+      - "8000"
     volumes:
       - uploads_data:/app/uploads
     depends_on:
@@ -42,6 +44,7 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    read_only: true
     networks:
       - fe_be
 

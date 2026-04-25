@@ -1,4 +1,5 @@
-<p>style="font-size:28px; font-weight:bold;">🏠 Apartment marketplace with price prediction using ML</p>
+# 🏠 Apartment marketplace with price prediction <br>
+# using ML
 
 Короткий опис проєкту
 

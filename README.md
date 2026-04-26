@@ -40,45 +40,42 @@ Apartment-marketplace-with-price-prediction-using-ML/
 
 ## 🤖 Price Prediction Model
 
-The machine learning component of the project focuses on predicting apartment prices based on apartment characteristics. The model was trained on the Apartment Prices in Slovakia dataset available on Kaggle: https://www.kaggle.com/datasets/petervboch/apartment-prices-in-slovakia.
+The machine learning component of the project focuses on predicting apartment prices based on apartment characteristics. The model was trained on the Apartment Prices in Slovakia dataset available on Kaggle:
+https://www.kaggle.com/datasets/petervboch/apartment-prices-in-slovakia
 
+The original dataset contains 7,442 apartment listings with 11 attributes describing various characteristics of apartments offered for sale.
 
-The original dataset contains 7,442 apartment listings with 11 attributes describing various characteristics of apartments offered for sale. During the preprocessing stage, several filtering steps were applied to remove invalid or unrealistic records:
+Before training the model, exploratory data analysis (EDA) was performed to better understand the dataset structure, identify potential data quality issues, and examine relationships between apartment attributes and the target variable.
 
-- apartments with 0 rooms  
-- apartments with size ≤ 10 m²  
-- listings with price ≤ 30,000  
-- listings located in "Česká republika"
+During the preprocessing stage, several filtering steps were applied to remove invalid or unrealistic records, including apartments with 0 rooms, apartments with size ≤ 10 m², listings with price ≤ 30,000, and listings located in "Česká republika". After cleaning the dataset, 6,403 valid apartment listings remained for model training.
 
+The final dataset used for training contains the following features:
 
-After preprocessing, the dataset used for training contained the following features:
-
-- rooms – number of rooms in the apartment  
-- size – apartment size in square meters  
-- reconstructed – whether the apartment has been reconstructed  
-- garage – availability of a garage  
-- balcony – presence of a balcony  
-- new – whether the apartment is located in a new building  
+- rooms – number of rooms in the apartment
+- size – apartment size in square meters
+- reconstructed – whether the apartment has been reconstructed
+- garage – availability of a garage
+- balcony – presence of a balcony
+- new – whether the apartment is located in a new building
 - location – city where the apartment is located
 
 The target variable used for training is:
 
-- price - selling price of the apartment
+- price – selling price of the apartment
 
+A data preprocessing pipeline was created to ensure consistent feature transformation during both training and inference. The numerical features rooms and size were standardized to account for differences in scale. The nominal categorical feature location was transformed using one-hot encoding. The remaining features (reconstructed, garage, balcony, and new) are binary attributes with values 0 and 1, so no additional preprocessing was required.
 
-Several regression algorithms were evaluated during experimentation:
+Several regression algorithms were evaluated during experimentation, including Linear Regression, Random Forest Regressor, and XGBoost Regressor. Linear Regression was used as a baseline model to compare performance with more advanced algorithms. After comparing the results, XGBoost Regressor was selected as the final model due to its superior predictive accuracy.
 
-- Linear Regression  
-- Random Forest Regressor  
-- XGBoost Regressor  
+Model performance was evaluated using several regression metrics, including MSE, MAE, MAPE, and R² Score. In addition to evaluation on the test dataset, cross-validation was performed using MAE and MAPE to verify the stability of the model across different data splits.
 
-After comparing their performance, XGBoost was selected as the final model due to its superior predictive accuracy. Model performance on the test dataset:
+Final model performance on the test dataset:
 
-- MAE (Mean Absolute Error): 34,984  
-- MAPE (Mean Absolute Percentage Error): 21.8%  
-- R² Score: 0.656 
+- MAE (Mean Absolute Error): 34,984
+- MAPE (Mean Absolute Percentage Error): 21.8%
+- R² Score: 0.656
 
-After the training phase, the selected model was exported and integrated into a prediction service. A REST API was then implemented to serve the trained model, allowing external applications to send apartment features and receive predicted price estimates. 
+After the training phase, the selected model was exported and integrated into a prediction service. A REST API was implemented to serve the trained model, allowing external applications to send apartment features and receive predicted price estimates.
 
 
 

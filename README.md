@@ -1,12 +1,42 @@
 # 🏠 Apartment marketplace with price prediction <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using ML
 
-Короткий опис проєкту
+This project is an apartment marketplace that integrates a machine learning model for apartment price prediction. 
+Users can explore apartment listings and estimate property prices based on selected features such as size, number of rooms, location, and additional attributes. 
+As part of the project requirements, the web application and the ML prediction service were deployed on different cloud providers to demonstrate integration of multiple cloud services within a single system.
 
 
 
 ## 📁 Project Structure
 
-Файлова структура проєкту
+```
+Apartment-marketplace-with-price-prediction-using-ML/
+│
+├── images/
+│
+├── ML/
+│  ├── api/
+│  ├── model_training/
+│
+├── Web_App/
+│  ├── backend/
+│  ├── frontend/
+│  ├── .env
+│  ├── .gitignore
+│  ├── docker-compose.yml
+│
+├── README.md
+
+```
+
+- images/ folder with images used in the README.
+- ML/api/ folder with the ML prediction API.
+- ML/model_training/ folder with jupyter notebooks for data analysis and model training.
+- Web_App/backend/ folder with the backend of the web application.
+- Web_App/frontend/ folder with the frontend of the web application.
+- Web_App/.env file with environment variables for the application.
+- Web_App/.gitignore file specifying files ignored by Git.
+- Web_App/docker-compose.yml file for running the full web application stack using Docker.
+- README.md provides project overview and instructions.
 
 
 
@@ -32,7 +62,22 @@
 
 ## 🛠️ Tools Used
 
-Інструменти використані в ML частині та веб застосунку
+For data analysis and training the ML model:
+
+- Python (Pandas, Matplotlib, Searbon, Scikit-learn, XGBoost)
+- Jupyter Notebook
+
+For creating an API with the ML model:
+
+- FastAPI
+- Docker
+
+For creating a web application:
+
+- React.js
+- FastAPI
+- PostgreSQL
+- Docker
 
 
 
@@ -110,11 +155,28 @@
 
 ## 🌐 Running the Web Application (Docker)
 
-1. 
+1. Run the API with the price prediction model (See the instructions above) <br>
+
+2. Open the folder with the web application: <br>
+
+   `cd Web_App` <br>
+
+3. Build and run the application using Docker Compose: <br>
+
+   `docker compose up --build` <br>
+   
+   The application will be available at the URL: http://localhost:3000 <br>
+
+4. Stop the application: <br>
+
+   `docker compose down -v` <br>
 
 
 
 ## ✍️ Authors
+
+This project was implemented in the summer semester of 2026 in the subject of Cloud technologies. The project was carried out by Dmytro Skrypchenko (ML part), Nikita Dakhno (backend of the web application), Daria Rezvin (frontend of the web application).
+
 
 
 

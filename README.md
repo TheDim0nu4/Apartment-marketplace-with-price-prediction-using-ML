@@ -38,6 +38,72 @@ Apartment-marketplace-with-price-prediction-using-ML/
 
 
 
+## 🤖 Price Prediction Model
+
+The machine learning component of the project focuses on predicting apartment prices based on apartment characteristics. The model was trained on the Apartment Prices in Slovakia dataset available on Kaggle: https://www.kaggle.com/datasets/petervboch/apartment-prices-in-slovakia.
+
+
+The original dataset contains 7,442 apartment listings with 11 attributes describing various characteristics of apartments offered for sale. During the preprocessing stage, several filtering steps were applied to remove invalid or unrealistic records:
+
+- apartments with 0 rooms  
+- apartments with size ≤ 10 m²  
+- listings with price ≤ 30,000  
+- listings located in "Česká republika"
+
+
+After preprocessing, the dataset used for training contained the following features:
+
+- rooms – number of rooms in the apartment  
+- size – apartment size in square meters  
+- reconstructed – whether the apartment has been reconstructed  
+- garage – availability of a garage  
+- balcony – presence of a balcony  
+- new – whether the apartment is located in a new building  
+- location – city where the apartment is located
+
+The target variable used for training is:
+
+- price - selling price of the apartment
+
+
+Several regression algorithms were evaluated during experimentation:
+
+- Linear Regression  
+- Random Forest Regressor  
+- XGBoost Regressor  
+
+After comparing their performance, XGBoost was selected as the final model due to its superior predictive accuracy. Model performance on the test dataset:
+
+- MAE (Mean Absolute Error): 34,984  
+- MAPE (Mean Absolute Percentage Error): 21.8%  
+- R² Score: 0.656 
+
+After the training phase, the selected model was exported and integrated into a prediction service. A REST API was then implemented to serve the trained model, allowing external applications to send apartment features and receive predicted price estimates. 
+
+
+
+## 💻 Web Application 
+
+The web application allows users to browse apartment listings and create new listings for apartments they want to sell. Users can filter listings by city and price range, view detailed information about each apartment, and manage their own listings. When creating a new listing, users can enter apartment details such as size, number of rooms, location, and additional attributes. The application also provides a "Predict with AI" button that allows users to estimate the apartment price using the trained machine learning model.
+
+Login and registration page:
+
+![image](images/Login_and_registration_page.png)
+
+Apartment listing form with the AI price prediction feature:
+
+![image](images/Apartment_listing_form_with_the_AI_price_prediction_feature.png)
+
+List of available apartments with filtering options:
+
+![image](images/List_of_available_apartments_with_filtering_options.png)
+
+Apartment detail page with full listing information:
+
+![image](images/Apartment_detail_page_with_full_listing_information.png)
+
+
+
 ## 🏗️ Architecture of the Solution
 
 ```
@@ -82,18 +148,6 @@ During the deployment of the project, free-tier cloud services were used. Becaus
 The ML prediction API can also be tested directly without the web application. An example request is provided in the section [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker). To use the deployed version of the API, simply replace the `http://localhost:8080` URL in the example with the deployed `https://apartment-price-prediction-api-131689818682.europe-central2.run.app`.
 
 If the deployed services are no longer available, the project can still be run locally by following the instructions in the sections [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker) and [Running the Web Application](#-running-the-web-application-docker) sections.
-
-
-
-## 🤖 Price Prediction Model
-
-Детальний опис частини з машинним навчанням 
-
-
-
-## 💻 Web Application 
-
-Детальний опис веб застосунку з картинками
 
 
 

@@ -145,9 +145,9 @@ During the deployment of the project, free-tier cloud services were used. Becaus
   Available until 06.07.2026 <br>
   Link: https://apartment-price-prediction-api-131689818682.europe-central2.run.app <br>
 
-The ML prediction API can also be tested directly without the web application. An example request is provided in the section [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker). To use the deployed version of the API, simply replace the `http://localhost:8080` URL in the example with the deployed `https://apartment-price-prediction-api-131689818682.europe-central2.run.app`.
+The ML prediction API can also be tested directly without the web application. An example request is provided in the section below. To use the deployed version of the API, simply replace the `http://localhost:8080` URL in the example with the deployed `https://apartment-price-prediction-api-131689818682.europe-central2.run.app`.
 
-If the deployed services are no longer available, the project can still be run locally by following the instructions in the sections [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker) and [Running the Web Application](#-running-the-web-application-docker) sections.
+If the deployed services are no longer available, the project can still be run locally by following the instructions in the sections below.
 
 
 

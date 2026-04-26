@@ -1,6 +1,6 @@
 # 🏠 Apartment marketplace with price prediction using machine learning
 
-This project is an apartment marketplace that integrates a machine learning model for apartment price prediction. Users can explore apartment listings and estimate property prices based on selected features such as size, number of rooms, location, and additional attributes. As part of the project, the web application and the ML prediction service were deployed on different cloud providers.
+This project implements a web-based apartment marketplace that allows users to browse apartment listings, create new listings, and estimate apartment prices using a machine learning model. The system combines a full-stack web application with a machine learning prediction service. The trained model predicts apartment prices based on features such as apartment size, number of rooms, location, and additional attributes. As part of the project, the web application and the ML prediction service were deployed on different cloud providers, demonstrating integration between multiple cloud platforms. 
 
 
 
@@ -127,7 +127,7 @@ The system consists of a web application for apartment listings and a separate m
 
 The web application is deployed on a Microsoft Azure Virtual Machine and is built using Docker Compose, which orchestrates multiple containers including the React frontend, FastAPI backend, and PostgreSQL database. The frontend port is exposed so the application can be accessed through a web browser. <br>
 
-Users can browse apartment listings and create new listings for apartments they want to sell. When submitting apartment information, the frontend provides a "Predict with AI" button. When this button is pressed, the frontend sends a POST request containing the apartment features to a machine learning prediction API. <br>
+As mentioned in the web application description, the frontend provides a "Predict with AI" button when submitting apartment information. When this button is pressed, the frontend sends a POST request containing the apartment features to the machine learning prediction API.  <br>
 
 The ML prediction service is deployed separately on Google Cloud Platform using Cloud Run, where a containerized FastAPI application hosts the trained XGBoost model. The service processes the request and returns the predicted apartment price via a REST API response. <br>
 

@@ -1,4 +1,4 @@
-# 🏠 Apartment marketplace with price prediction using ML
+# 🏠 Apartment marketplace with price prediction using machine learning
 
 This project is an apartment marketplace that integrates a machine learning model for apartment price prediction. 
 Users can explore apartment listings and estimate property prices based on selected features such as size, number of rooms, location, and additional attributes. 

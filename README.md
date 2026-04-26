@@ -1,8 +1,6 @@
 # 🏠 Apartment marketplace with price prediction using machine learning
 
-This project is an apartment marketplace that integrates a machine learning model for apartment price prediction. 
-Users can explore apartment listings and estimate property prices based on selected features such as size, number of rooms, location, and additional attributes. 
-As part of the project requirements, the web application and the ML prediction service were deployed on different cloud providers to demonstrate integration of multiple cloud services within a single system.
+This project is an apartment marketplace that integrates a machine learning model for apartment price prediction. Users can explore apartment listings and estimate property prices based on selected features such as size, number of rooms, location, and additional attributes. As part of the project, the web application and the ML prediction service were deployed on different cloud providers.
 
 
 
@@ -42,9 +40,48 @@ Apartment-marketplace-with-price-prediction-using-ML/
 
 ## 🏗️ Architecture of the Solution
 
-Загальний опис архітектури рішення та використаних клаудових провайдерів та служб 
+```
+User Browser
+      │
+      ▼
+React Frontend (Azure VM)
+      │
+      ├──► FastAPI Backend (Azure VM)
+      │        │
+      │        ▼
+      │   PostgreSQL Database (Azure VM)
+      │
+      └──► ML Prediction API (GCP Cloud Run)
+               │
+               ▼
+          XGBoost Model
+```
 
-Картинка 
+The system consists of a web application for apartment listings and a separate machine learning prediction service deployed on different cloud platforms. <br>
+
+The web application is deployed on a Microsoft Azure Virtual Machine and is built using Docker Compose, which orchestrates multiple containers including the React frontend, FastAPI backend, and PostgreSQL database. The frontend port is exposed so the application can be accessed through a web browser. <br>
+
+Users can browse apartment listings and create new listings for apartments they want to sell. When submitting apartment information, the frontend provides a "Predict with AI" button. When this button is pressed, the frontend sends a POST request containing the apartment features to a machine learning prediction API. <br>
+
+The ML prediction service is deployed separately on Google Cloud Platform using Cloud Run, where a containerized FastAPI application hosts the trained XGBoost model. The service processes the request and returns the predicted apartment price via a REST API response. <br>
+
+
+
+## 🔗 Live Deployment
+
+During the deployment of the project, free-tier cloud services were used. Because of these limitations, the deployed services will only be available for a limited time.
+
+- **Web Application (Azure VM)** <br>
+  Available until 24.05.2026 <br>
+  Link: http://4.239.244.183:3000 <br>
+
+- **ML Prediction API (GCP Cloud Run)** <br>
+  Available until 06.07.2026 <br>
+  Link: https://apartment-price-prediction-api-131689818682.europe-central2.run.app <br>
+
+The ML prediction API can also be tested directly without the web application. An example request is provided in the section [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker). To use the deployed version of the API, simply replace the `http://localhost:8080` URL in the example with the deployed `https://apartment-price-prediction-api-131689818682.europe-central2.run.app`.
+
+If the deployed services are no longer available, the project can still be run locally by following the instructions in the sections [Running the API with the Price Prediction Model](#-running-the-api-with-the-price-prediction-model-docker) and [Running the Web Application](#-running-the-web-application-docker) sections.
 
 
 
